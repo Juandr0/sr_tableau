@@ -15,6 +15,7 @@ class TableauView extends StatefulWidget {
 class _TableauViewState extends State<TableauView> {
   final apiFetcher = DataFetcher();
   final todaysDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
+  final int _animationTime = 500;
 
   int _selectedIndex = 0;
   int _currentChannel = 0;
@@ -37,7 +38,11 @@ class _TableauViewState extends State<TableauView> {
         title: const Text("Sveriges Radio"),
       ),
       body: Center(
-        child: TableauListBuilder(tableau: tableau),
+        child: AnimatedContainer(
+          duration: Duration(milliseconds: _animationTime),
+          color: appBackgroundColor,
+          child: TableauListBuilder(tableau: tableau),
+        ),
       ),
       bottomNavigationBar: BottomNavBar(
         onItemTapped: _onItemTapped,
@@ -49,6 +54,7 @@ class _TableauViewState extends State<TableauView> {
   void _onItemTapped(channelIndex) async {
     if (_currentChannel != channelIndex) {
       setState(() {
+        appBackgroundColor = Colors.white;
         tableau = [];
         _currentChannel = channelIndex;
         _pagination = 1;
