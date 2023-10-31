@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class AppTheme {
   static ThemeData lightTheme() {
-    Color lightBackground = const Color.fromARGB(255, 255, 255, 255);
+    Color lightBackground = const Color.fromARGB(255, 245, 245, 245);
     return ThemeData.light().copyWith(
       scaffoldBackgroundColor: const Color.fromARGB(255, 230, 230, 230),
       appBarTheme: AppBarTheme(
