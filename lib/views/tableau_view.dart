@@ -3,6 +3,7 @@ import 'package:school_sr_tableau/models/tableau.dart';
 import 'package:school_sr_tableau/widgets/data_fetcher.dart';
 import 'package:school_sr_tableau/widgets/tableau_list_builder.dart';
 import 'package:school_sr_tableau/bottom_navbar.dart';
+import 'package:intl/intl.dart';
 
 class TableauView extends StatefulWidget {
   const TableauView({super.key});
@@ -13,6 +14,8 @@ class TableauView extends StatefulWidget {
 
 class _TableauViewState extends State<TableauView> {
   final apiFetcher = DataFetcher();
+  final todaysDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
+
   int _selectedIndex = 0;
   int _currentChannel = 0;
   int _pagination = 1;
@@ -72,19 +75,19 @@ class _TableauViewState extends State<TableauView> {
         setState(() {
           _currentChannel = 0;
         });
-        return 'https://api.sr.se/api/v2/scheduledepisodes?channelid=132&format=json&page=$_pagination';
+        return 'https://api.sr.se/api/v2/scheduledepisodes?channelid=132&format=json&page=$_pagination&$todaysDate';
 
       case 1:
         setState(() {
           _currentChannel = 1;
         });
-        return 'https://api.sr.se/api/v2/scheduledepisodes?channelid=163&format=json&page=$_pagination';
+        return 'https://api.sr.se/api/v2/scheduledepisodes?channelid=163&format=json&page=$_pagination&$todaysDate';
 
       case 2:
         setState(() {
           _currentChannel = 2;
         });
-        return 'https://api.sr.se/api/v2/scheduledepisodes?channelid=164&format=json&page=$_pagination';
+        return 'https://api.sr.se/api/v2/scheduledepisodes?channelid=164&format=json&page=$_pagination&$todaysDate';
     }
     return '';
   }

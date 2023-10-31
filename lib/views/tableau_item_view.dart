@@ -16,10 +16,22 @@ class TableauItemView extends StatelessWidget {
           vertical: 15,
         ),
         child: Column(children: [
+          Text(
+            tableau.title,
+            style: const TextStyle(
+              fontWeight: FontWeight.w400,
+              fontSize: 15,
+            ),
+          ),
+          const SizedBox(
+            height: 5,
+          ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Text(tableau.title),
-              const Spacer(),
+              Text(tableau.startTime),
+              const Spacer(), // implementera progressbar?
+              const Text("tid slut"),
               Image.network(
                 tableau.imageString,
                 width: 40,
