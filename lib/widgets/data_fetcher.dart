@@ -27,6 +27,7 @@ class DataFetcher {
         },
       ),
     );
+
     return tableauList;
   }
 }

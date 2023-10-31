@@ -1,23 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:school_sr_tableau/models/tableau.dart';
 
 class BottomNavBar extends StatelessWidget {
-  BottomNavBar({
+  final int selectedIndex;
+  final ValueChanged<int> onItemTapped;
+
+  const BottomNavBar({
     required this.selectedIndex,
     required this.onItemTapped,
     super.key,
   });
-
-  final int selectedIndex;
-  final ValueChanged<int> onItemTapped;
-  final TextStyle selectedStyle = GoogleFonts.roboto(
-    fontWeight: FontWeight.bold,
-  );
-
-  final TextStyle unselectedStyle = GoogleFonts.roboto(
-    fontWeight: FontWeight.normal,
-  );
 
   @override
   Widget build(BuildContext context) {
@@ -49,13 +41,9 @@ class BottomNavBar extends StatelessWidget {
           label: 'P3',
         ),
       ],
-
       currentIndex: selectedIndex,
-      onTap: onItemTapped,
-      //Styling
-      selectedLabelStyle: selectedStyle,
-      unselectedLabelStyle: unselectedStyle,
       selectedItemColor: Tableau.tableauColors[selectedIndex],
+      onTap: onItemTapped,
     );
   }
 }
