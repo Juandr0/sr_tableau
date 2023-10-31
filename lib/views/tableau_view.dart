@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:school_sr_tableau/models/tableau.dart';
-import 'package:school_sr_tableau/widgets/api_fetcher.dart';
+import 'package:school_sr_tableau/widgets/data_fetcher.dart';
 import 'package:school_sr_tableau/widgets/tableau_list_builder.dart';
 
 class TableauView extends StatefulWidget {
@@ -12,8 +12,8 @@ class TableauView extends StatefulWidget {
 
 class _TableauViewState extends State<TableauView> {
   final apiFetcher = DataFetcher();
-  int _currentChannel = 0;
   int _selectedIndex = 0;
+  int _currentChannel = 0;
   int _pagination = 1;
   List<Tableau> tableau = [];
 
@@ -23,15 +23,17 @@ class _TableauViewState extends State<TableauView> {
     _onItemTapped(_selectedIndex);
   }
 
-  void _onItemTapped(int page) async {
-    if (_currentChannel != page) {
-      tableau = [];
-      _pagination = 1;
+  void _onItemTapped(channelIndex) async {
+    if (_currentChannel != channelIndex) {
+      setState(() {
+        tableau = [];
+        _currentChannel = channelIndex;
+        _pagination = 1;
+      });
     }
 
     setState(() {
-      _currentChannel = _selectedIndex;
-      _selectedIndex = page;
+      _selectedIndex = channelIndex;
     });
 
     String fetchUrl = '';
@@ -61,7 +63,8 @@ class _TableauViewState extends State<TableauView> {
         break;
     }
 
-    final fetchResponse = await apiFetcher.fetchFromApi(fetchUrl);
+    final fetchResponse =
+        await apiFetcher.fetchFromApi(fetchUrl, _currentChannel);
 
     setState(() {
       tableau.addAll(fetchResponse);
