@@ -5,6 +5,10 @@ class TableauItemView extends StatelessWidget {
   const TableauItemView(this.tableau, {super.key});
 
   final imageSize = const Size(40, 40);
+  final titleTextStyle = const TextStyle(
+    fontWeight: FontWeight.w400,
+    fontSize: 15,
+  );
   final Tableau tableau;
 
   @override
@@ -24,10 +28,7 @@ class TableauItemView extends StatelessWidget {
         child: Column(children: [
           Text(
             tableau.title,
-            style: const TextStyle(
-              fontWeight: FontWeight.w400,
-              fontSize: 15,
-            ),
+            style: titleTextStyle,
           ),
           const SizedBox(
             height: 5,

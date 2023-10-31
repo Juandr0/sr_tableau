@@ -1,17 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:school_sr_tableau/views/tableau_view.dart';
+import 'package:school_sr_tableau/app_theme.dart';
 
 void main() {
   runApp(
     MaterialApp(
-      theme: ThemeData(
-        primaryColor: Colors.deepPurple,
-        scaffoldBackgroundColor: Color.fromARGB(255, 62, 6, 130),
-      ),
-      darkTheme: ThemeData.dark().copyWith(
-        primaryColor: Colors.deepPurple,
-        scaffoldBackgroundColor: Colors.black,
-      ),
+      theme: AppTheme.lightTheme(),
+      darkTheme: AppTheme.darkTheme(),
       home: const TableauView(),
     ),
   );

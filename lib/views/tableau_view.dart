@@ -22,7 +22,6 @@ class _TableauViewState extends State<TableauView> {
   int _pagination = 1;
 
   List<Tableau> tableau = [];
-  Color appBackgroundColor = Colors.white;
 
   @override
   void initState() {
@@ -33,14 +32,12 @@ class _TableauViewState extends State<TableauView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: appBackgroundColor,
       appBar: AppBar(
         title: const Text("Sveriges Radio"),
       ),
       body: Center(
         child: AnimatedContainer(
           duration: Duration(milliseconds: _animationTime),
-          color: appBackgroundColor,
           child: TableauListBuilder(tableau: tableau),
         ),
       ),
@@ -66,10 +63,9 @@ class _TableauViewState extends State<TableauView> {
 
     String fetchUrl = getFetchUrl(_selectedIndex);
     final fetchResponse = await apiFetcher.fetchFromApi(fetchUrl);
-    print(fetchUrl);
     setState(() {
       tableau.addAll(fetchResponse);
-      appBackgroundColor = Tableau.tableauColors[_selectedIndex];
+      //appBackgroundColor = Tableau.tableauColors[_selectedIndex];
       _pagination++;
     });
   }
