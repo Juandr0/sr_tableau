@@ -9,7 +9,7 @@ class Tableau {
 
   final String title;
   final String description;
-  final DateTime startTime;
-  final DateTime endtime;
+  final String startTime;
+  final String endtime;
   final String imageString;
 }
