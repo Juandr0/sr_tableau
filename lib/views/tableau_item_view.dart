@@ -9,7 +9,7 @@ class TableauItemView extends StatelessWidget {
   @override
   Widget build(context) {
     return Card(
-      color: const Color.fromARGB(255, 207, 207, 207),
+      color: const Color.fromARGB(255, 239, 239, 239),
       child: Padding(
         padding: const EdgeInsets.symmetric(
           horizontal: 20,
