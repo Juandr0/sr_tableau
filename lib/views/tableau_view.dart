@@ -54,7 +54,6 @@ class _TableauViewState extends State<TableauView> {
   void _onItemTapped(channelIndex) async {
     if (_currentChannel != channelIndex) {
       setState(() {
-        appBackgroundColor = Colors.white;
         tableau = [];
         _currentChannel = channelIndex;
         _pagination = 1;
@@ -67,7 +66,7 @@ class _TableauViewState extends State<TableauView> {
 
     String fetchUrl = getFetchUrl(_selectedIndex);
     final fetchResponse = await apiFetcher.fetchFromApi(fetchUrl);
-
+    print(fetchUrl);
     setState(() {
       tableau.addAll(fetchResponse);
       appBackgroundColor = Tableau.tableauColors[_selectedIndex];
@@ -81,19 +80,19 @@ class _TableauViewState extends State<TableauView> {
         setState(() {
           _currentChannel = 0;
         });
-        return 'https://api.sr.se/api/v2/scheduledepisodes?channelid=132&format=json&page=$_pagination&$todaysDate';
+        return 'https://api.sr.se/api/v2/scheduledepisodes?channelid=132&format=json&page=$_pagination&fromdate$todaysDate';
 
       case 1:
         setState(() {
           _currentChannel = 1;
         });
-        return 'https://api.sr.se/api/v2/scheduledepisodes?channelid=163&format=json&page=$_pagination&$todaysDate';
+        return 'https://api.sr.se/api/v2/scheduledepisodes?channelid=163&format=json&page=$_pagination&fromdate$todaysDate';
 
       case 2:
         setState(() {
           _currentChannel = 2;
         });
-        return 'https://api.sr.se/api/v2/scheduledepisodes?channelid=164&format=json&page=$_pagination&$todaysDate';
+        return 'https://api.sr.se/api/v2/scheduledepisodes?channelid=164&format=json&page=$_pagination&fromdate$todaysDate';
     }
     return '';
   }

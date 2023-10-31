@@ -4,6 +4,7 @@ import 'package:school_sr_tableau/models/tableau.dart';
 class TableauItemView extends StatelessWidget {
   const TableauItemView(this.tableau, {super.key});
 
+  final imageSize = const Size(40, 40);
   final Tableau tableau;
 
   @override
@@ -15,7 +16,6 @@ class TableauItemView extends StatelessWidget {
         formatTimeFromTimestampString(tableau.endtime);
 
     return Card(
-      color: const Color.fromARGB(255, 239, 239, 239),
       child: Padding(
         padding: const EdgeInsets.symmetric(
           horizontal: 20,
@@ -33,18 +33,21 @@ class TableauItemView extends StatelessWidget {
             height: 5,
           ),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(formattedStartTime), // Display formatted start time
-              const Spacer(), // implementera progressbar?
+              Text(formattedStartTime),
+              const Spacer(),
               Text(formattedEndTime),
+              const SizedBox(
+                width: 20,
+              ),
               Image.network(
                 tableau.imageString,
-                width: 40,
-                height: 40,
+                width: imageSize.width,
+                height: imageSize.height,
               )
             ],
-          )
+          ),
         ]),
       ),
     );
@@ -59,8 +62,10 @@ class TableauItemView extends StatelessWidget {
       final int timestamp = int.parse(timestampValue);
       final DateTime date =
           DateTime.fromMillisecondsSinceEpoch(timestamp, isUtc: true);
+
+      final DateTime timeAsCET = date.add(const Duration(hours: 1));
       final String formattedTime =
-          '${date.hour.toString().padLeft(2, '0')}:${date.minute.toString().padLeft(2, '0')}';
+          '${timeAsCET.hour.toString().padLeft(2, '0')}:${timeAsCET.minute.toString().padLeft(2, '0')}';
       return formattedTime;
     }
     return '';
