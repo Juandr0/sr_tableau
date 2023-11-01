@@ -3,7 +3,6 @@ import 'package:school_sr_tableau/models/tableau.dart';
 import 'package:school_sr_tableau/widgets/data_fetcher.dart';
 import 'package:school_sr_tableau/widgets/tableau_list_builder.dart';
 import 'package:school_sr_tableau/bottom_navbar.dart';
-import 'package:intl/intl.dart';
 
 class TableauView extends StatefulWidget {
   const TableauView({super.key});
@@ -13,15 +12,11 @@ class TableauView extends StatefulWidget {
 }
 
 class _TableauViewState extends State<TableauView> {
-  final apiFetcher = DataFetcher();
-  final todaysDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
+  final dataFetcher = DataFetcher();
   final int _animationTime = 500;
+  List<Tableau> tableau = [];
 
   int _selectedIndex = 0;
-  int _currentChannel = 0;
-  int _pagination = 1;
-
-  List<Tableau> tableau = [];
 
   @override
   void initState() {
@@ -49,47 +44,18 @@ class _TableauViewState extends State<TableauView> {
   }
 
   void _onItemTapped(channelIndex) async {
-    if (_currentChannel != channelIndex) {
-      setState(() {
-        tableau = [];
-        _currentChannel = channelIndex;
-        _pagination = 1;
-      });
-    }
+    setState(() {
+      tableau = [];
+    });
 
     setState(() {
       _selectedIndex = channelIndex;
     });
 
-    String fetchUrl = getFetchUrl(_selectedIndex);
-    final fetchResponse = await apiFetcher.fetchFromApi(fetchUrl);
+    final fetchResponse = await dataFetcher.fetchFromApi(_selectedIndex);
     setState(() {
       tableau.addAll(fetchResponse);
       //appBackgroundColor = Tableau.tableauColors[_selectedIndex];
-      _pagination++;
     });
-  }
-
-  String getFetchUrl(index) {
-    switch (index) {
-      case 0:
-        setState(() {
-          _currentChannel = 0;
-        });
-        return 'https://api.sr.se/api/v2/scheduledepisodes?channelid=132&format=json&page=$_pagination&fromdate$todaysDate';
-
-      case 1:
-        setState(() {
-          _currentChannel = 1;
-        });
-        return 'https://api.sr.se/api/v2/scheduledepisodes?channelid=163&format=json&page=$_pagination&fromdate$todaysDate';
-
-      case 2:
-        setState(() {
-          _currentChannel = 2;
-        });
-        return 'https://api.sr.se/api/v2/scheduledepisodes?channelid=164&format=json&page=$_pagination&fromdate$todaysDate';
-    }
-    return '';
   }
 }
