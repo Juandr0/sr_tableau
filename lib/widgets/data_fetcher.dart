@@ -8,23 +8,29 @@ class DataFetcher {
   Future<List<Tableau>> fetchFromApi(String urlString) async {
     tableauList.clear();
     final response = await dio.get(urlString);
-    final responseSchedule = List<Map<String, dynamic>>.from(
-      response.data['schedule'],
-    );
+    final responseSchedule =
+        List<Map<String, dynamic>>.from(response.data['schedule']);
+
+    final now = DateTime.now();
+    final formattedCurrentTime =
+        '${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}';
 
     tableauList.addAll(
-      responseSchedule.map(
-        (data) {
-          String? imageUrl = data['imageurl'] ??
-              'https://cdn.iconscout.com/icon/free/png-256/free-no-image-1771002-1505134.png';
-          return Tableau(
-              title: data['title'],
-              description: data['description'],
-              startTime: formatTimeFromTimestampString(data['starttimeutc']),
-              endtime: formatTimeFromTimestampString(data['endtimeutc']),
-              imageString: imageUrl!);
-        },
-      ),
+      responseSchedule.where((data) {
+        final endTime = formatTimeFromTimestampString(data['endtimeutc']);
+        return endTime.compareTo(formattedCurrentTime) >= 0;
+      }).map((data) {
+        String? imageUrl = data['imageurl'] ??
+            'https://cdn.iconscout.com/icon/free/png-256/free-no-image-1771002-1505134.png';
+
+        return Tableau(
+          title: data['title'],
+          description: data['description'],
+          startTime: formatTimeFromTimestampString(data['starttimeutc']),
+          endTime: formatTimeFromTimestampString(data['endtimeutc']),
+          imageString: imageUrl!,
+        );
+      }),
     );
 
     return tableauList;

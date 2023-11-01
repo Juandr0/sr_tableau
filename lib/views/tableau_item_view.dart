@@ -32,7 +32,7 @@ class TableauItemView extends StatelessWidget {
             children: [
               Text(tableau.startTime),
               const Spacer(),
-              Text(tableau.endtime),
+              Text(tableau.endTime),
               const SizedBox(
                 width: 20,
               ),
