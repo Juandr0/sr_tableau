@@ -33,7 +33,7 @@ class _TableauViewState extends State<TableauView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Sveriges Radio"),
+        title: const Text("Sveriges Radio idag"),
       ),
       body: Center(
         child: AnimatedContainer(
