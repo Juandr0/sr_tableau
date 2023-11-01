@@ -23,8 +23,14 @@ class DataFetcher {
         String? imageUrl = data['imageurl'] ??
             'https://cdn.iconscout.com/icon/free/png-256/free-no-image-1771002-1505134.png';
 
+        String title = '';
+        if (data['subtitle'] != null) {
+          title = data['title'] + ' ' + data['subtitle'];
+        } else {
+          title = data['title'];
+        }
         return Tableau(
-          title: data['title'],
+          title: title,
           description: data['description'],
           startTime: formatTimeFromTimestampString(data['starttimeutc']),
           endTime: formatTimeFromTimestampString(data['endtimeutc']),

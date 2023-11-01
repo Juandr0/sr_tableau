@@ -17,7 +17,7 @@ class _TableauItemViewState extends State<TableauItemView> {
     fontWeight: FontWeight.w400,
     fontSize: 15,
   );
-  Color cardColor = const Color.fromARGB(255, 165, 165, 165);
+  Color activeCardColor = const Color.fromARGB(255, 165, 165, 165);
 
   double progress = 0.0;
 
@@ -52,20 +52,25 @@ class _TableauItemViewState extends State<TableauItemView> {
   @override
   Widget build(BuildContext context) {
     return Card(
-      //color: ,
       child: Padding(
         padding: const EdgeInsets.symmetric(
           horizontal: 20,
-          vertical: 15,
+          vertical: 20,
         ),
         child: Column(
           children: [
-            Text(
-              widget.tableau.title,
-              style: titleTextStyle,
+            SizedBox(
+              width: 200,
+              child: Center(
+                child: Text(
+                  widget.tableau.title,
+                  style: titleTextStyle,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
             ),
             const SizedBox(
-              height: 5,
+              height: 15,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
