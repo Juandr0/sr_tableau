@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:school_sr_tableau/models/tableau.dart';
 
 class BottomNavBar extends StatelessWidget {
   final int selectedIndex;
@@ -42,7 +41,6 @@ class BottomNavBar extends StatelessWidget {
         ),
       ],
       currentIndex: selectedIndex,
-      selectedItemColor: Tableau.tableauColors[selectedIndex],
       onTap: onItemTapped,
     );
   }

@@ -8,26 +8,55 @@ class DataFetcher {
   Future<List<Tableau>> fetchFromApi(String urlString) async {
     tableauList.clear();
     final response = await dio.get(urlString);
-    final responseSchedule = List<Map<String, dynamic>>.from(
-      response.data['schedule'],
-    );
+    final responseSchedule =
+        List<Map<String, dynamic>>.from(response.data['schedule']);
+
+    final now = DateTime.now();
+    final formattedCurrentTime =
+        '${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}';
 
     tableauList.addAll(
-      responseSchedule.map(
-        (data) {
-          String? imageUrl = data['imageurl'] ??
-              'https://cdn.pixabay.com/photo/2017/02/12/21/29/false-2061131_640.png';
+      responseSchedule.where((data) {
+        final endTime = formatTimeFromTimestampString(data['endtimeutc']);
+        return endTime.compareTo(formattedCurrentTime) >= 0;
+      }).map((data) {
+        String? imageUrl = data['imageurl'] ??
+            'https://cdn.iconscout.com/icon/free/png-256/free-no-image-1771002-1505134.png';
 
-          return Tableau(
-              title: data['title'],
-              description: data['description'],
-              startTime: data['starttimeutc'],
-              endtime: data['endtimeutc'],
-              imageString: imageUrl!);
-        },
-      ),
+        String title = '';
+        if (data['subtitle'] != null) {
+          title = data['title'] + ' ' + data['subtitle'];
+        } else {
+          title = data['title'];
+        }
+        return Tableau(
+          title: title,
+          description: data['description'],
+          startTime: formatTimeFromTimestampString(data['starttimeutc']),
+          endTime: formatTimeFromTimestampString(data['endtimeutc']),
+          imageString: imageUrl!,
+        );
+      }),
     );
 
     return tableauList;
+  }
+
+  String formatTimeFromTimestampString(String timestampString) {
+    final int startIndex = timestampString.indexOf('(') + 1;
+    final int endIndex = timestampString.indexOf(')');
+    if (startIndex >= 0 && endIndex >= 0) {
+      final String timestampValue =
+          timestampString.substring(startIndex, endIndex);
+      final int timestamp = int.parse(timestampValue);
+      final DateTime date =
+          DateTime.fromMillisecondsSinceEpoch(timestamp, isUtc: true);
+
+      final DateTime timeAsCET = date.add(const Duration(hours: 1));
+      final String formattedTime =
+          '${timeAsCET.hour.toString().padLeft(2, '0')}:${timeAsCET.minute.toString().padLeft(2, '0')}';
+      return formattedTime;
+    }
+    return '';
   }
 }

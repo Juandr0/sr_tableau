@@ -5,14 +5,14 @@ class Tableau {
     required this.title,
     required this.description,
     required this.startTime,
-    required this.endtime,
+    required this.endTime,
     required this.imageString,
   });
 
   final String title;
   final String description;
   final String startTime;
-  final String endtime;
+  final String endTime;
   final String imageString;
 
   /// Represents the corresponding colors of each tableau.
