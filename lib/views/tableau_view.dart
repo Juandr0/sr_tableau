@@ -3,7 +3,7 @@ import 'package:school_sr_tableau/models/tableau.dart';
 import 'package:school_sr_tableau/widgets/data_fetcher.dart';
 import 'package:school_sr_tableau/widgets/tableau_list_builder.dart';
 import 'package:school_sr_tableau/bottom_navbar.dart';
-import 'package:school_sr_tableau/widgets/radio_player.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 class TableauView extends StatefulWidget {
   const TableauView({super.key});
@@ -14,10 +14,17 @@ class TableauView extends StatefulWidget {
 
 class _TableauViewState extends State<TableauView> {
   final dataFetcher = DataFetcher();
-  late RadioPlayer radioPlayer;
+  final AudioPlayer radioPlayer = AudioPlayer();
   List<Tableau> tableau = [];
 
+  bool isPlaying = false;
   int _selectedIndex = 0;
+
+  List<String> radioUrl = [
+    'https://sverigesradio.se/topsy/direkt/srapi/132.mp3',
+    'https://sverigesradio.se/topsy/direkt/srapi/163.mp3',
+    'https://sverigesradio.se/topsy/direkt/srapi/164.mp3',
+  ];
 
   @override
   void initState() {
@@ -30,7 +37,14 @@ class _TableauViewState extends State<TableauView> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Sveriges Radio idag"),
-        actions: [radioPlayer = RadioPlayer(radioIndex: _selectedIndex)],
+        actions: [
+          IconButton(
+            onPressed: _toggleRadioPlayer,
+            icon: isPlaying
+                ? const Icon(Icons.stop)
+                : const Icon(Icons.play_arrow),
+          )
+        ],
       ),
       body: Center(
         child: TableauListBuilder(tableau: tableau),
@@ -42,7 +56,22 @@ class _TableauViewState extends State<TableauView> {
     );
   }
 
+  void _toggleRadioPlayer() async {
+    isPlaying
+        ? radioPlayer.stop()
+        : await radioPlayer.play(
+            UrlSource(radioUrl[_selectedIndex]),
+          );
+
+    setState(() {
+      isPlaying = !isPlaying;
+    });
+  }
+
   void _onNavIconTapped(channelIndex) async {
+    if (isPlaying) {
+      _toggleRadioPlayer();
+    }
     setState(() {
       tableau = [];
       _selectedIndex = channelIndex;
