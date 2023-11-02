@@ -22,5 +22,6 @@ class Tableau {
     const Color.fromARGB(255, 74, 148, 177),
     const Color.fromARGB(255, 233, 91, 39),
     const Color.fromARGB(255, 70, 157, 107),
+    const Color.fromARGB(255, 170, 43, 154),
   ];
 }
