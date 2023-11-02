@@ -3,6 +3,7 @@ import 'package:school_sr_tableau/models/tableau.dart';
 import 'package:school_sr_tableau/widgets/data_fetcher.dart';
 import 'package:school_sr_tableau/widgets/tableau_list_builder.dart';
 import 'package:school_sr_tableau/bottom_navbar.dart';
+import 'package:school_sr_tableau/widgets/radio_player.dart';
 
 class TableauView extends StatefulWidget {
   const TableauView({super.key});
@@ -13,7 +14,6 @@ class TableauView extends StatefulWidget {
 
 class _TableauViewState extends State<TableauView> {
   final dataFetcher = DataFetcher();
-  final int _animationTime = 500;
   List<Tableau> tableau = [];
 
   int _selectedIndex = 0;
@@ -21,7 +21,7 @@ class _TableauViewState extends State<TableauView> {
   @override
   void initState() {
     super.initState();
-    _onItemTapped(_selectedIndex);
+    _onNavIconTapped(_selectedIndex);
   }
 
   @override
@@ -29,33 +29,27 @@ class _TableauViewState extends State<TableauView> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Sveriges Radio idag"),
+        actions: [RadioPlayer(radioIndex: _selectedIndex)],
       ),
       body: Center(
-        child: AnimatedContainer(
-          duration: Duration(milliseconds: _animationTime),
-          child: TableauListBuilder(tableau: tableau),
-        ),
+        child: TableauListBuilder(tableau: tableau),
       ),
       bottomNavigationBar: BottomNavBar(
-        onItemTapped: _onItemTapped,
+        onItemTapped: _onNavIconTapped,
         selectedIndex: _selectedIndex,
       ),
     );
   }
 
-  void _onItemTapped(channelIndex) async {
+  void _onNavIconTapped(channelIndex) async {
     setState(() {
       tableau = [];
-    });
-
-    setState(() {
       _selectedIndex = channelIndex;
     });
 
     final fetchResponse = await dataFetcher.fetchFromApi(_selectedIndex);
     setState(() {
       tableau.addAll(fetchResponse);
-      //appBackgroundColor = Tableau.tableauColors[_selectedIndex];
     });
   }
 }
