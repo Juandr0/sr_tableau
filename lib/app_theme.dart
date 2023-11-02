@@ -19,6 +19,7 @@ class AppTheme {
     Color darkBackground = const Color.fromARGB(255, 84, 84, 84);
 
     return ThemeData.dark().copyWith(
+      primaryColor: Colors.grey,
       scaffoldBackgroundColor: const Color.fromARGB(255, 87, 87, 87),
       appBarTheme: AppBarTheme(
         backgroundColor: darkBackground,

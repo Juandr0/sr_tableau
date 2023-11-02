@@ -3,15 +3,25 @@ import 'package:flutter/material.dart';
 
 class RadioPlayer extends StatefulWidget {
   const RadioPlayer({required this.radioIndex, super.key});
+
+  static AudioPlayer audioPlayer = AudioPlayer();
   final int radioIndex;
 
   @override
   State<RadioPlayer> createState() => _RadioPlayerState();
+
+  void stop() {
+    audioPlayer.stop();
+  }
 }
 
 class _RadioPlayerState extends State<RadioPlayer> {
-  String audioPlayerUrl = 'https://sverigesradio.se/topsy/direkt/srapi/132.mp3';
-  AudioPlayer audioPlayer = AudioPlayer();
+  List<String> audioPlayersUrl = [
+    'https://sverigesradio.se/topsy/direkt/srapi/132.mp3',
+    'https://sverigesradio.se/topsy/direkt/srapi/163.mp3',
+    'https://sverigesradio.se/topsy/direkt/srapi/164.mp3',
+  ];
+
   bool isPlaying = false;
 
   @override
@@ -24,9 +34,9 @@ class _RadioPlayerState extends State<RadioPlayer> {
 
   void _audioPlayerPressed() async {
     isPlaying
-        ? audioPlayer.stop()
-        : await audioPlayer.play(
-            UrlSource(audioPlayerUrl),
+        ? RadioPlayer.audioPlayer.stop()
+        : await RadioPlayer.audioPlayer.play(
+            UrlSource(audioPlayersUrl[widget.radioIndex]),
           );
 
     setState(() {

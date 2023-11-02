@@ -14,6 +14,7 @@ class TableauView extends StatefulWidget {
 
 class _TableauViewState extends State<TableauView> {
   final dataFetcher = DataFetcher();
+  late RadioPlayer radioPlayer;
   List<Tableau> tableau = [];
 
   int _selectedIndex = 0;
@@ -29,7 +30,7 @@ class _TableauViewState extends State<TableauView> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Sveriges Radio idag"),
-        actions: [RadioPlayer(radioIndex: _selectedIndex)],
+        actions: [radioPlayer = RadioPlayer(radioIndex: _selectedIndex)],
       ),
       body: Center(
         child: TableauListBuilder(tableau: tableau),
