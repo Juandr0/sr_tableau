@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 
 class Tableau {
-  const Tableau({
-    required this.title,
-    required this.description,
-    required this.startTime,
-    required this.endTime,
-    required this.imageString,
-  });
+  const Tableau(
+      {required this.title,
+      required this.description,
+      required this.startTime,
+      required this.endTime,
+      required this.imageString});
 
   final String title;
   final String description;

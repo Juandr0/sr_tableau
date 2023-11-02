@@ -3,6 +3,7 @@ import 'package:school_sr_tableau/models/tableau.dart';
 import 'package:school_sr_tableau/widgets/data_fetcher.dart';
 import 'package:school_sr_tableau/widgets/tableau_list_builder.dart';
 import 'package:school_sr_tableau/bottom_navbar.dart';
+import 'package:school_sr_tableau/widgets/radio_player.dart';
 
 class TableauView extends StatefulWidget {
   const TableauView({super.key});
@@ -21,7 +22,7 @@ class _TableauViewState extends State<TableauView> {
   @override
   void initState() {
     super.initState();
-    _onItemTapped(_selectedIndex);
+    _onIconTapped(_selectedIndex);
   }
 
   @override
@@ -29,6 +30,7 @@ class _TableauViewState extends State<TableauView> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Sveriges Radio idag"),
+        actions: [RadioPlayer(radioIndex: _selectedIndex)],
       ),
       body: Center(
         child: AnimatedContainer(
@@ -37,18 +39,15 @@ class _TableauViewState extends State<TableauView> {
         ),
       ),
       bottomNavigationBar: BottomNavBar(
-        onItemTapped: _onItemTapped,
+        onItemTapped: _onIconTapped,
         selectedIndex: _selectedIndex,
       ),
     );
   }
 
-  void _onItemTapped(channelIndex) async {
+  void _onIconTapped(channelIndex) async {
     setState(() {
       tableau = [];
-    });
-
-    setState(() {
       _selectedIndex = channelIndex;
     });
 
