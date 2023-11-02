@@ -21,9 +21,9 @@ class _TableauViewState extends State<TableauView> {
   int _selectedIndex = 0;
 
   List<String> radioUrl = [
-    'https://sverigesradio.se/topsy/direkt/srapi/132.mp3',
-    'https://sverigesradio.se/topsy/direkt/srapi/163.mp3',
-    'https://sverigesradio.se/topsy/direkt/srapi/164.mp3',
+    'https://http-live.sr.se/p1-mp3-128',
+    'https://http-live.sr.se/p2-mp3-128',
+    'https://http-live.sr.se/p3-mp3-128',
   ];
 
   @override
