@@ -14,7 +14,6 @@ class TableauView extends StatefulWidget {
 
 class _TableauViewState extends State<TableauView> {
   final dataFetcher = DataFetcher();
-  final int _animationTime = 500;
   List<Tableau> tableau = [];
 
   int _selectedIndex = 0;
@@ -22,7 +21,7 @@ class _TableauViewState extends State<TableauView> {
   @override
   void initState() {
     super.initState();
-    _onIconTapped(_selectedIndex);
+    _onNavIconTapped(_selectedIndex);
   }
 
   @override
@@ -33,19 +32,16 @@ class _TableauViewState extends State<TableauView> {
         actions: [RadioPlayer(radioIndex: _selectedIndex)],
       ),
       body: Center(
-        child: AnimatedContainer(
-          duration: Duration(milliseconds: _animationTime),
-          child: TableauListBuilder(tableau: tableau),
-        ),
+        child: TableauListBuilder(tableau: tableau),
       ),
       bottomNavigationBar: BottomNavBar(
-        onItemTapped: _onIconTapped,
+        onItemTapped: _onNavIconTapped,
         selectedIndex: _selectedIndex,
       ),
     );
   }
 
-  void _onIconTapped(channelIndex) async {
+  void _onNavIconTapped(channelIndex) async {
     setState(() {
       tableau = [];
       _selectedIndex = channelIndex;
@@ -54,7 +50,6 @@ class _TableauViewState extends State<TableauView> {
     final fetchResponse = await dataFetcher.fetchFromApi(_selectedIndex);
     setState(() {
       tableau.addAll(fetchResponse);
-      //appBackgroundColor = Tableau.tableauColors[_selectedIndex];
     });
   }
 }
