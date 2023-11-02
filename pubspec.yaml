@@ -68,6 +68,7 @@ flutter:
     - assets/images/p1.png
     - assets/images/p2.png
     - assets/images/p3.png
+    - assets/images/p4.png
     - assets/images/defaultImage.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
