@@ -11,3 +11,10 @@ void main() {
     ),
   );
 }
+
+// extension Colors on Color {
+//   Color get p1 => const Color.fromARGB(255, 74, 148, 177);
+//   Color get p2 => const Color.fromARGB(255, 233, 91, 39);
+//   Color get p3 => const Color.fromARGB(255, 70, 157, 107);
+//   Color get p4 => const Color.fromARGB(255, 170, 43, 154);
+// }
