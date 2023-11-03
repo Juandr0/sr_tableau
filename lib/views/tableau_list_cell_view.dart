@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:school_sr_tableau/models/tableau.dart';
+import 'package:school_sr_tableau/models/radio_program.dart';
 import 'dart:async';
 
-class TableauItemView extends StatefulWidget {
-  const TableauItemView(this.tableau, {Key? key}) : super(key: key);
+class TableauListCellView extends StatefulWidget {
+  const TableauListCellView(this.tableau, {Key? key}) : super(key: key);
 
-  final Tableau tableau;
+  final RadioProgram tableau;
 
   @override
-  State<TableauItemView> createState() => _TableauItemViewState();
+  State<TableauListCellView> createState() => _TableauItemViewState();
 }
 
-class _TableauItemViewState extends State<TableauItemView> {
+class _TableauItemViewState extends State<TableauListCellView> {
   final imageSize = const Size(40, 40);
   final titleTextStyle = const TextStyle(
     fontWeight: FontWeight.w400,
