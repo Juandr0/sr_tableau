@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:school_sr_tableau/models/radio_channel.dart';
-import 'package:school_sr_tableau/models/radio_program.dart';
+import 'package:school_sr_tableau/models/radio_tableau.dart';
 import 'package:intl/intl.dart';
 
 class DataFetcher {
@@ -28,16 +28,19 @@ class DataFetcher {
     return channelList;
   }
 
-  /// Fetches individual radio channel schedule
-  Future<List<RadioProgram>> fetchRadioChannelSchedule(int channelIndex) async {
-    final List<RadioProgram> tableauList = [];
+  /// Fetches individual radio channel schedule via index or id
+  Future<List<RadioTableau>> fetchRadioChannelSchedule(
+      int channelIndex, int? channelId) async {
+    final List<RadioTableau> tableauList = [];
     final now = DateTime.now();
     final formattedCurrentTime =
         '${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}';
 
     tableauList.clear();
 
-    final response = await dio.get(getUrl(channelIndex));
+    final response = await dio.get(
+      getUrl(channelIndex, channelId),
+    );
     final responseSchedule =
         List<Map<String, dynamic>>.from(response.data['schedule']);
 
@@ -47,7 +50,7 @@ class DataFetcher {
         return endTime.compareTo(formattedCurrentTime) >= 0;
       }).map((data) {
         String? imageUrl = data['imageurl'] ?? defaultImageUrl;
-        return RadioProgram(
+        return RadioTableau(
           title: addSubtitleToTitle(data['title'], data['subtitle']),
           description: data['description'],
           startTime: formatTimeString(data['starttimeutc']),
@@ -60,14 +63,12 @@ class DataFetcher {
     return tableauList;
   }
 
-  String getUrl(index) {
+  String getUrl(int index, int? channelId) {
     final today = DateFormat('yyyy-MM-dd').format(DateTime.now());
 
-    /*
-    final int channelId = 123;
-    final String baseUrl =
-        'https://api.sr.se/api/v2/scheduledepisodes?channelid=$channelId&format=json&fromdate$today&size=150';
-        */
+    if (channelId != null) {
+      return 'https://api.sr.se/api/v2/scheduledepisodes?channelid=$channelId&format=json&fromdate$today&size=150';
+    }
     switch (index) {
       case 0:
         return 'https://api.sr.se/api/v2/scheduledepisodes?channelid=132&format=json&fromdate$today&size=150';

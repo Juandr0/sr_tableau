@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:school_sr_tableau/models/radio_program.dart';
+import 'package:school_sr_tableau/models/radio_tableau.dart';
 import 'package:school_sr_tableau/widgets/channel_list_builder.dart';
 import 'package:school_sr_tableau/widgets/data_fetcher.dart';
 import 'package:school_sr_tableau/widgets/tableau_list_builder.dart';
@@ -16,7 +16,7 @@ class TableauView extends StatefulWidget {
 class _TableauViewState extends State<TableauView> {
   final dataFetcher = DataFetcher();
   final AudioPlayer radioPlayer = AudioPlayer();
-  List<RadioProgram> tableau = [];
+  List<RadioTableau> tableau = [];
 
   bool isPlaying = false;
   int _selectedIndex = 0;
@@ -49,7 +49,7 @@ class _TableauViewState extends State<TableauView> {
       ),
       body: Center(
         child: _selectedIndex == 3
-            ? ChannelListBuilder()
+            ? const ChannelListBuilder()
             : TableauListBuilder(tableau: tableau),
       ),
       bottomNavigationBar: BottomNavBar(
@@ -81,7 +81,7 @@ class _TableauViewState extends State<TableauView> {
     });
     if (_selectedIndex != 3) {
       final fetchResponse =
-          await dataFetcher.fetchRadioChannelSchedule(_selectedIndex);
+          await dataFetcher.fetchRadioChannelSchedule(_selectedIndex, null);
       setState(() {
         tableau.addAll(fetchResponse);
       });

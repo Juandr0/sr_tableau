@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:school_sr_tableau/models/radio_program.dart';
+import 'package:school_sr_tableau/models/radio_tableau.dart';
 import 'dart:async';
 
 class TableauListCellView extends StatefulWidget {
   const TableauListCellView(this.tableau, {Key? key}) : super(key: key);
 
-  final RadioProgram tableau;
+  final RadioTableau tableau;
 
   @override
   State<TableauListCellView> createState() => _TableauItemViewState();

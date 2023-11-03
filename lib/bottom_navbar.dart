@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:school_sr_tableau/models/radio_program.dart';
+import 'package:school_sr_tableau/models/radio_tableau.dart';
 
 class BottomNavBar extends StatelessWidget {
   BottomNavBar({
@@ -63,7 +63,7 @@ class BottomNavBar extends StatelessWidget {
       //Icon color styling
       selectedLabelStyle: selectedStyle,
       unselectedLabelStyle: unselectedStyle,
-      selectedItemColor: RadioProgram.tableauColors[selectedIndex],
+      selectedItemColor: RadioTableau.tableauColors[selectedIndex],
     );
   }
 }

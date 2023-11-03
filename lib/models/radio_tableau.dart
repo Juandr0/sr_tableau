@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class RadioProgram {
-  const RadioProgram(
+class RadioTableau {
+  const RadioTableau(
       {required this.title,
       required this.description,
       required this.startTime,
