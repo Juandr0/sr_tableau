@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:school_sr_tableau/models/radio_tableau.dart';
 
-class BottomNavBar extends StatelessWidget {
-  BottomNavBar({
+class CustomNavBar extends StatelessWidget {
+  CustomNavBar({
     required this.selectedIndex,
     required this.onItemTapped,
     super.key,

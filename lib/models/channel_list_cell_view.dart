@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:school_sr_tableau/custom_nav_bar.dart';
 import 'package:school_sr_tableau/models/radio_channel.dart';
 import 'package:school_sr_tableau/models/radio_tableau.dart';
-import 'package:school_sr_tableau/widgets/tableau_list_builder.dart';
+import 'package:school_sr_tableau/pages/tableau_list_page.dart';
 import 'package:school_sr_tableau/widgets/data_fetcher.dart';
 
 class ChannelListCellView extends StatelessWidget {
@@ -15,10 +17,8 @@ class ChannelListCellView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: InkWell(
-        onTap: () async {
-          List<RadioTableau> tableau =
-              await dataFetcher.fetchRadioChannelSchedule(0, channel.id);
-          _navigateToTableauList(context, tableau, channel);
+        onTap: () {
+          context.go('/p4Channel', extra: channel.id);
         },
         child: Padding(
           padding: const EdgeInsets.all(10),
@@ -34,20 +34,6 @@ class ChannelListCellView extends StatelessWidget {
               const Icon(Icons.arrow_forward_ios),
             ],
           ),
-        ),
-      ),
-    );
-  }
-
-  void _navigateToTableauList(
-      BuildContext context, List<RadioTableau> tableau, RadioChannel channel) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => Scaffold(
-          appBar: AppBar(
-            title: Text(channel.title),
-          ),
-          body: TableauListBuilder(tableau: tableau),
         ),
       ),
     );

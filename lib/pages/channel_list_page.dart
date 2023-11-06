@@ -1,22 +1,22 @@
 import 'package:school_sr_tableau/models/radio_channel.dart';
-import 'package:school_sr_tableau/views/channel_list_cell_view.dart';
-import 'data_fetcher.dart';
+import 'package:school_sr_tableau/models/channel_list_cell_view.dart';
+import '../widgets/data_fetcher.dart';
 import 'package:flutter/material.dart';
 
-class ChannelListBuilder extends StatefulWidget {
-  const ChannelListBuilder({Key? key}) : super(key: key);
+class ChannelListPage extends StatefulWidget {
+  const ChannelListPage({super.key});
   @override
   State<StatefulWidget> createState() => _ChannelListBuilder();
 }
 
-class _ChannelListBuilder extends State<ChannelListBuilder> {
+class _ChannelListBuilder extends State<ChannelListPage> {
   final DataFetcher dataFetcher = DataFetcher();
   List<RadioChannel> sortedChannels = [];
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<RadioChannel>>(
-      future: dataFetcher.fetchAllRadioChannels(),
+      future: dataFetcher.fetchAllP4Channels(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasData) {

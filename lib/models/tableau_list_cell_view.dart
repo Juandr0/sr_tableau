@@ -3,7 +3,7 @@ import 'package:school_sr_tableau/models/radio_tableau.dart';
 import 'dart:async';
 
 class TableauListCellView extends StatefulWidget {
-  const TableauListCellView(this.tableau, {Key? key}) : super(key: key);
+  const TableauListCellView(this.tableau, {super.key});
 
   final RadioTableau tableau;
 
