@@ -32,15 +32,21 @@ class MyApp extends StatelessWidget {
           routes: [
             GoRoute(
               path: '/p1',
-              builder: (context, state) => const TableauListPage(channel: 'p1'),
+              builder: (context, state) => const TableauListPage(
+                channel: 'p1',
+              ),
             ),
             GoRoute(
               path: '/p2',
-              builder: (context, state) => const TableauListPage(channel: 'p2'),
+              builder: (context, state) => const TableauListPage(
+                channel: 'p2',
+              ),
             ),
             GoRoute(
               path: '/p3',
-              builder: (context, state) => const TableauListPage(channel: 'p3'),
+              builder: (context, state) => const TableauListPage(
+                channel: 'p3',
+              ),
             ),
             GoRoute(
               path: '/p4ChannelsList',
@@ -50,7 +56,10 @@ class MyApp extends StatelessWidget {
               path: '/p4Channel',
               builder: (context, state) {
                 final channelId = state.extra as int;
-                return TableauListPage(channel: 'p4', channelId: channelId);
+                return TableauListPage(
+                  channel: 'p4',
+                  channelId: channelId,
+                );
               },
             ),
           ],

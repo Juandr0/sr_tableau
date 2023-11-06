@@ -18,14 +18,23 @@ class _TableauListPageState extends State<TableauListPage> {
   final AudioPlayer radioPlayer = AudioPlayer();
   final dataFetcher = DataFetcher();
   late RadioTableau radioTableau;
+  List<RadioTableau> dataList = [];
+
   bool isPlaying = false;
+  String appBarTitle = '';
   int currentIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchDataAndUpdateAppBarTitle();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Sveriges Radio idag"),
+        title: Text(appBarTitle),
         actions: [
           currentIndex != 3
               ? IconButton(
@@ -37,27 +46,37 @@ class _TableauListPageState extends State<TableauListPage> {
               : Container()
         ],
       ),
-      body: FutureBuilder<List<RadioTableau>>(
-        future: dataFetcher.fetchRadioChannelSchedule(
-            widget.channel!, widget.channelId),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            if (snapshot.hasData) {
-              List<RadioTableau> tempList = snapshot.data!;
-              return ListView.builder(
-                  itemCount: tempList.length,
-                  itemBuilder: (ctx, index) {
-                    radioTableau = tempList[index];
-                    return TableauListCellView(tempList[index]);
-                  });
-            } else if (snapshot.hasError) {
-              return Text("Error: ${snapshot.error}");
-            }
-          }
-          return const Center(child: CircularProgressIndicator());
-        },
-      ),
+      body: dataList.isNotEmpty
+          ? ListView.builder(
+              itemCount: dataList.length,
+              itemBuilder: (ctx, index) {
+                return TableauListCellView(dataList[index]);
+              },
+            )
+          : const Center(child: CircularProgressIndicator()),
     );
+  }
+
+  void updateAppBarTitle(String title) {
+    setState(() {
+      appBarTitle = 'Just nu: $title';
+    });
+  }
+
+  void fetchDataAndUpdateAppBarTitle() {
+    dataFetcher
+        .fetchRadioChannelSchedule(widget.channel!, widget.channelId)
+        .then((List<RadioTableau> tempList) {
+      if (tempList.isNotEmpty) {
+        radioTableau = tempList[0];
+        updateAppBarTitle(radioTableau.title);
+        setState(() {
+          dataList = tempList;
+        });
+      }
+    }).catchError((error) {
+      print("Error: $error");
+    });
   }
 
   @override

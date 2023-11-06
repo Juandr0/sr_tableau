@@ -29,23 +29,17 @@ class _GoRouterScaffoldState extends State<GoRouterScaffold> {
   }
 
   void changeTab(int index) {
-    const String stringPrefix = 'Sveriges Radio idag:';
-
     switch (index) {
       case 0:
-        title = '$stringPrefix P1';
         context.go('/p1');
         break;
       case 1:
-        title = '$stringPrefix P2';
         context.go('/p2');
         break;
       case 2:
-        title = '$stringPrefix P3';
         context.go('/p3');
         break;
       case 3:
-        title = '$stringPrefix P4';
         context.go('/p4ChannelsList');
         break;
       case 4:
