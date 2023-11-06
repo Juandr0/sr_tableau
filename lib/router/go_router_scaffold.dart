@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:school_sr_tableau/custom_nav_bar.dart';
+import 'package:school_sr_tableau/widgets/custom_nav_bar.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:school_sr_tableau/models/radio_tableau.dart';
 import 'package:school_sr_tableau/widgets/data_fetcher.dart';
@@ -50,6 +50,9 @@ class _GoRouterScaffoldState extends State<GoRouterScaffold> {
   }
 
   void changeTab(int index) {
+    if (isPlaying) {
+      _toggleRadioPlayer();
+    }
     switch (index) {
       case 0:
         context.go('/p1');
@@ -72,22 +75,22 @@ class _GoRouterScaffoldState extends State<GoRouterScaffold> {
     });
   }
 
-  // void _onNavIconTapped(channelIndex) async {
-  //   if (isPlaying) {
-  //     _toggleRadioPlayer();
-  //   }
-  //   setState(() {
-  //     tableau = [];
-  //     currentIndex = channelIndex;
-  //   });
-  //   if (currentIndex != 3) {
-  //     final fetchResponse =
-  //         await dataFetcher.fetchRadioChannelSchedule(currentIndex, null);
-  //     setState(() {
-  //       tableau.addAll(fetchResponse);
-  //     });
-  //   }
-  // }
+  void _onNavIconTapped(channelIndex) async {
+    if (isPlaying) {
+      _toggleRadioPlayer();
+    }
+    setState(() {
+      tableau = [];
+      currentIndex = channelIndex;
+    });
+    if (currentIndex != 3 || currentIndex != 4) {
+      final fetchResponse =
+          await dataFetcher.fetchRadioChannelSchedule(channelIndex, null);
+      setState(() {
+        tableau.addAll(fetchResponse);
+      });
+    }
+  }
 
   void _toggleRadioPlayer() async {
     isPlaying

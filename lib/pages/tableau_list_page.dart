@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:school_sr_tableau/models/radio_tableau.dart';
-import 'package:school_sr_tableau/models/tableau_list_cell_view.dart';
+import 'package:school_sr_tableau/pages/cells/tableau_list_cell_view.dart';
 import 'package:school_sr_tableau/widgets/data_fetcher.dart';
 
 class TableauListPage extends StatelessWidget {
-  TableauListPage({this.channel, this.channelId, super.key});
+  TableauListPage({required this.channel, this.channelId, super.key});
 
-  String? channel = 'p4';
-  int? channelId;
+  final String? channel;
+  final int? channelId;
 
   final dataFetcher = DataFetcher();
 

@@ -1,5 +1,5 @@
 import 'package:school_sr_tableau/models/radio_channel.dart';
-import 'package:school_sr_tableau/models/channel_list_cell_view.dart';
+import 'package:school_sr_tableau/pages/cells/channel_list_cell_view.dart';
 import '../widgets/data_fetcher.dart';
 import 'package:flutter/material.dart';
 
