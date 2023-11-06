@@ -3,8 +3,7 @@ import 'package:school_sr_tableau/models/radio_tableau.dart';
 import 'dart:async';
 
 class TableauListCellView extends StatefulWidget {
-  const TableauListCellView(this.tableau, {Key? key}) : super(key: key);
-
+  const TableauListCellView(this.tableau, {super.key});
   final RadioTableau tableau;
 
   @override
@@ -18,35 +17,42 @@ class _TableauItemViewState extends State<TableauListCellView> {
     fontSize: 15,
   );
   Color activeCardColor = const Color.fromARGB(255, 165, 165, 165);
-
   double progress = 0.0;
 
   @override
   void initState() {
     super.initState();
-    updateProgress();
+    updateProgressBarTimer();
   }
 
-  void updateProgress() {
-    Timer.periodic(const Duration(seconds: 1), (timer) {
-      final now = DateTime.now();
-      final startTime = _parseTime(widget.tableau.startTime, now);
-      final endTime = _parseTime(widget.tableau.endTime, now);
+  void updateProgressBarTimer() {
+    // Called once outside the timer to update the UI upon displaying the view
+    updateProgressBar();
+    var updateDuration = const Duration(minutes: 1);
 
-      if (now.isBefore(startTime)) {
-        progress = 0.0;
-      } else if (now.isAfter(endTime)) {
-        progress = 1.0;
-      } else {
-        final timePassed = now.difference(startTime).inMinutes;
-        final totalDuration = endTime.difference(startTime).inMinutes;
-        progress = timePassed / totalDuration;
-      }
-
-      if (mounted) {
-        setState(() {});
-      }
+    Timer.periodic(updateDuration, (timer) {
+      updateProgressBar();
     });
+  }
+
+  void updateProgressBar() {
+    final now = DateTime.now();
+    final startTime = _parseTime(widget.tableau.startTime, now);
+    final endTime = _parseTime(widget.tableau.endTime, now);
+
+    if (now.isBefore(startTime)) {
+      progress = 0.0;
+    } else if (now.isAfter(endTime)) {
+      progress = 1.0;
+    } else {
+      final timePassed = now.difference(startTime).inMinutes;
+      final totalDuration = endTime.difference(startTime).inMinutes;
+      progress = timePassed / totalDuration;
+    }
+
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   @override
