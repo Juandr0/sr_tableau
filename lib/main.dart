@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+
 import 'package:school_sr_tableau/router/go_router_scaffold.dart';
 import 'package:school_sr_tableau/app_theme.dart';
 import 'package:school_sr_tableau/pages/channel_list_page.dart';
@@ -9,7 +10,7 @@ void main() {
   runApp(MyApp());
 }
 
-enum Channels { p1, p2, p3, p4 }
+//enum channels { p1, p2, p3, p4 }
 
 class MyApp extends StatelessWidget {
   MyApp({super.key});
@@ -31,15 +32,15 @@ class MyApp extends StatelessWidget {
           routes: [
             GoRoute(
               path: '/p1',
-              builder: (context, state) => TableauListPage(channel: 'p1'),
+              builder: (context, state) => const TableauListPage(channel: 'p1'),
             ),
             GoRoute(
               path: '/p2',
-              builder: (context, state) => TableauListPage(channel: 'p2'),
+              builder: (context, state) => const TableauListPage(channel: 'p2'),
             ),
             GoRoute(
               path: '/p3',
-              builder: (context, state) => TableauListPage(channel: 'p3'),
+              builder: (context, state) => const TableauListPage(channel: 'p3'),
             ),
             GoRoute(
               path: '/p4ChannelsList',

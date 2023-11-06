@@ -50,13 +50,16 @@ class DataFetcher {
         return endTime.compareTo(formattedCurrentTime) >= 0;
       }).map((data) {
         String? imageUrl = data['imageurl'] ?? defaultImageUrl;
+        int channelId = data['channel']['id'];
+
         return RadioTableau(
-          title: addSubtitleToTitle(data['title'], data['subtitle']),
-          description: data['description'],
-          startTime: formatTimeString(data['starttimeutc']),
-          endTime: formatTimeString(data['endtimeutc']),
-          imageString: imageUrl!,
-        );
+            title: addSubtitleToTitle(data['title'], data['subtitle']),
+            description: data['description'],
+            startTime: formatTimeString(data['starttimeutc']),
+            endTime: formatTimeString(data['endtimeutc']),
+            imageString: imageUrl!,
+            playerUrl:
+                'http://sverigesradio.se/topsy/direkt/$channelId-lo.mp3');
       }),
     );
 

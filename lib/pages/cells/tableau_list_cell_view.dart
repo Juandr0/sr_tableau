@@ -4,7 +4,6 @@ import 'dart:async';
 
 class TableauListCellView extends StatefulWidget {
   const TableauListCellView(this.tableau, {super.key});
-
   final RadioTableau tableau;
 
   @override
@@ -18,7 +17,6 @@ class _TableauItemViewState extends State<TableauListCellView> {
     fontSize: 15,
   );
   Color activeCardColor = const Color.fromARGB(255, 165, 165, 165);
-
   double progress = 0.0;
 
   @override
