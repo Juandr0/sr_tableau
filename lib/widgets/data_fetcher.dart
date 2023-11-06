@@ -59,7 +59,7 @@ class DataFetcher {
             endTime: formatTimeString(data['endtimeutc']),
             imageString: imageUrl!,
             playerUrl:
-                'http://sverigesradio.se/topsy/direkt/$channelId-lo.mp3');
+                'https://sverigesradio.se/topsy/direkt/srapi/$channelId.mp3');
       }),
     );
 

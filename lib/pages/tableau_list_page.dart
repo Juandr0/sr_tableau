@@ -60,13 +60,18 @@ class _TableauListPageState extends State<TableauListPage> {
     );
   }
 
+  @override
+  void dispose() {
+    radioPlayer.stop();
+    super.dispose();
+  }
+
   void toggleRadioPlayer() async {
     isPlaying
         ? radioPlayer.stop()
         : await radioPlayer.play(
             UrlSource(radioTableau.playerUrl),
           );
-
     setState(() {
       isPlaying = !isPlaying;
     });
