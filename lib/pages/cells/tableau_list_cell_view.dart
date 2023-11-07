@@ -29,28 +29,32 @@ class _TableauItemViewState extends State<TableauListCellView> {
   }
 
   void updateProgressBarTimer() {
-    final now = DateTime.now();
-
     // Called once outside the timer to update the UI upon displaying the view
-    updateProgressBar(now);
-    var updateDuration = const Duration(seconds: 3);
+    updateProgressBar();
+    var updateDuration = const Duration(seconds: 5);
 
     Timer.periodic(updateDuration, (timer) {
-      updateProgressBar(now);
+      updateProgressBar();
     });
   }
 
-  void updateProgressBar(DateTime now) {
+  void updateProgressBar() {
+    final now = DateTime.now();
     final startTime = _parseTime(widget.tableau.startTime, now);
-    final endTime = _parseTime(widget.tableau.endTime, now);
+    DateTime endTime = _parseTime(widget.tableau.endTime, now);
 
     if (now.isBefore(startTime)) {
       progress = 0.0;
     } else if (now.isAfter(endTime)) {
       progress = 1.0;
     } else {
+      if (endTime == DateTime(now.year, now.month, now.day, 0, 0)) {
+        endTime = DateTime(
+            now.year, now.month, now.day, 23, 59, 59); // Set it to 23:59:59
+      }
       final timePassed = now.difference(startTime).inSeconds;
       final totalDuration = endTime.difference(startTime).inSeconds;
+
       progress = timePassed / totalDuration;
     }
 

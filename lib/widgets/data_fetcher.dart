@@ -47,7 +47,8 @@ class DataFetcher {
     tableauList.addAll(
       responseSchedule.where((data) {
         final endTime = formatTimeString(data['endtimeutc']);
-        return endTime.compareTo(formattedCurrentTime) >= 0;
+        return endTime.compareTo(formattedCurrentTime) >= 0 ||
+            endTime == '00:00';
       }).map((data) {
         String? imageUrl = data['imageurl'] ?? defaultImageUrl;
         int channelId = data['channel']['id'];
