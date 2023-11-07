@@ -29,18 +29,17 @@ class _TableauItemViewState extends State<TableauListCellView> {
   }
 
   void updateProgressBarTimer() {
-    final now = DateTime.now();
-
     // Called once outside the timer to update the UI upon displaying the view
-    updateProgressBar(now);
-    var updateDuration = const Duration(seconds: 3);
+    updateProgressBar();
+    var updateDuration = const Duration(seconds: 5);
 
     Timer.periodic(updateDuration, (timer) {
-      updateProgressBar(now);
+      updateProgressBar();
     });
   }
 
-  void updateProgressBar(DateTime now) {
+  void updateProgressBar() {
+    final now = DateTime.now();
     final startTime = _parseTime(widget.tableau.startTime, now);
     final endTime = _parseTime(widget.tableau.endTime, now);
 
