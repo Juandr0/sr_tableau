@@ -29,17 +29,18 @@ class _TableauItemViewState extends State<TableauListCellView> {
   }
 
   void updateProgressBarTimer() {
+    final now = DateTime.now();
+
     // Called once outside the timer to update the UI upon displaying the view
-    updateProgressBar();
+    updateProgressBar(now);
     var updateDuration = const Duration(seconds: 3);
 
     Timer.periodic(updateDuration, (timer) {
-      updateProgressBar();
+      updateProgressBar(now);
     });
   }
 
-  void updateProgressBar() {
-    final now = DateTime.now();
+  void updateProgressBar(DateTime now) {
     final startTime = _parseTime(widget.tableau.startTime, now);
     final endTime = _parseTime(widget.tableau.endTime, now);
 
@@ -48,8 +49,8 @@ class _TableauItemViewState extends State<TableauListCellView> {
     } else if (now.isAfter(endTime)) {
       progress = 1.0;
     } else {
-      final timePassed = now.difference(startTime).inMinutes;
-      final totalDuration = endTime.difference(startTime).inMinutes;
+      final timePassed = now.difference(startTime).inSeconds;
+      final totalDuration = endTime.difference(startTime).inSeconds;
       progress = timePassed / totalDuration;
     }
 
@@ -61,14 +62,13 @@ class _TableauItemViewState extends State<TableauListCellView> {
   @override
   Widget build(BuildContext context) {
     final currentTheme = _getSelectedTheme(widget.themeType);
+    var themeColor = _getThemedColor(currentTheme);
     return Card(
       borderOnForeground: true,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(17.0),
         side: BorderSide(
-          color: progress > 0 && progress < 1
-              ? currentTheme.primaryColor
-              : currentTheme.primaryColor.withAlpha(0),
+          color: progress > 0 && progress < 1 ? themeColor : Colors.transparent,
           width: 2.0,
         ),
       ),
@@ -102,8 +102,8 @@ class _TableauItemViewState extends State<TableauListCellView> {
                   width: 200,
                   child: LinearProgressIndicator(
                     value: progress,
-                    color: currentTheme.primaryColor,
-                    backgroundColor: currentTheme.primaryColor.withAlpha(150),
+                    color: themeColor,
+                    backgroundColor: themeColor.withAlpha(50),
                   ),
                 ),
                 const Spacer(),
@@ -114,6 +114,17 @@ class _TableauItemViewState extends State<TableauListCellView> {
         ),
       ),
     );
+  }
+
+  Color _getThemedColor(ThemeData currentTheme) {
+    final themeMode = MediaQuery.of(context).platformBrightness;
+    if (themeMode == Brightness.light) {
+      return progress > 0 && progress < 1
+          ? currentTheme.primaryColor
+          : currentTheme.primaryColor.withAlpha(0);
+    } else {
+      return Colors.grey;
+    }
   }
 
   ThemeData _getSelectedTheme(ThemeType themeType) {
