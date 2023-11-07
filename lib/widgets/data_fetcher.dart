@@ -53,13 +53,15 @@ class DataFetcher {
         int channelId = data['channel']['id'];
 
         return RadioTableau(
-            title: addSubtitleToTitle(data['title'], data['subtitle']),
-            description: data['description'],
-            startTime: formatTimeString(data['starttimeutc']),
-            endTime: formatTimeString(data['endtimeutc']),
-            imageString: imageUrl!,
-            playerUrl:
-                'https://sverigesradio.se/topsy/direkt/srapi/$channelId.mp3');
+          title: addSubtitleToTitle(data['title'], data['subtitle']),
+          description: data['description'],
+          startTime: formatTimeString(data['starttimeutc']),
+          endTime: formatTimeString(data['endtimeutc']),
+          imageString: imageUrl!,
+          playerUrl:
+              'https://sverigesradio.se/topsy/direkt/srapi/$channelId.mp3',
+          channelName: data['channel']['name'],
+        );
       }),
     );
 

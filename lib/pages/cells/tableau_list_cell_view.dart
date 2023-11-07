@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:school_sr_tableau/models/radio_tableau.dart';
 import 'dart:async';
+import 'package:school_sr_tableau/app_theme.dart';
 
 class TableauListCellView extends StatefulWidget {
   const TableauListCellView(this.tableau, {super.key});
@@ -16,8 +17,8 @@ class _TableauItemViewState extends State<TableauListCellView> {
     fontWeight: FontWeight.w400,
     fontSize: 15,
   );
-  Color activeCardColor = const Color.fromARGB(255, 165, 165, 165);
   double progress = 0.0;
+  final ThemeData currentTheme = AppTheme.p4();
 
   @override
   void initState() {
@@ -28,7 +29,7 @@ class _TableauItemViewState extends State<TableauListCellView> {
   void updateProgressBarTimer() {
     // Called once outside the timer to update the UI upon displaying the view
     updateProgressBar();
-    var updateDuration = const Duration(minutes: 1);
+    var updateDuration = const Duration(seconds: 3);
 
     Timer.periodic(updateDuration, (timer) {
       updateProgressBar();
@@ -58,6 +59,16 @@ class _TableauItemViewState extends State<TableauListCellView> {
   @override
   Widget build(BuildContext context) {
     return Card(
+      borderOnForeground: true,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(17.0),
+        side: BorderSide(
+          color: progress > 0 && progress < 1
+              ? currentTheme.primaryColor
+              : currentTheme.primaryColor.withAlpha(0),
+          width: 2.0,
+        ),
+      ),
       child: Padding(
         padding: const EdgeInsets.symmetric(
           horizontal: 20,
@@ -88,7 +99,8 @@ class _TableauItemViewState extends State<TableauListCellView> {
                   width: 200,
                   child: LinearProgressIndicator(
                     value: progress,
-                    color: Theme.of(context).primaryColor,
+                    color: currentTheme.primaryColor,
+                    backgroundColor: currentTheme.primaryColor.withAlpha(150),
                   ),
                 ),
                 const Spacer(),

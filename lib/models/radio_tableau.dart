@@ -7,7 +7,8 @@ class RadioTableau {
       required this.startTime,
       required this.endTime,
       required this.imageString,
-      required this.playerUrl});
+      required this.playerUrl,
+      required this.channelName});
 
   final String title;
   final String description;
@@ -15,6 +16,7 @@ class RadioTableau {
   final String endTime;
   final String imageString;
   final String playerUrl;
+  final String channelName;
 
   /// Represents the corresponding colors of each tableau.
   /// Color[0] = P1
