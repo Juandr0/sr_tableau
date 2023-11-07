@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:school_sr_tableau/models/radio_tableau.dart';
 import 'dart:async';
+import 'package:school_sr_tableau/app_theme.dart';
+import 'package:school_sr_tableau/pages/tableau_list_page.dart';
 
 class TableauListCellView extends StatefulWidget {
-  const TableauListCellView(this.tableau, {super.key});
+  const TableauListCellView(this.tableau, this.themeType, {super.key});
+
   final RadioTableau tableau;
+  final ThemeType themeType;
 
   @override
   State<TableauListCellView> createState() => _TableauItemViewState();
@@ -16,7 +20,6 @@ class _TableauItemViewState extends State<TableauListCellView> {
     fontWeight: FontWeight.w400,
     fontSize: 15,
   );
-  Color activeCardColor = const Color.fromARGB(255, 165, 165, 165);
   double progress = 0.0;
 
   @override
@@ -26,17 +29,18 @@ class _TableauItemViewState extends State<TableauListCellView> {
   }
 
   void updateProgressBarTimer() {
+    final now = DateTime.now();
+
     // Called once outside the timer to update the UI upon displaying the view
-    updateProgressBar();
-    var updateDuration = const Duration(minutes: 1);
+    updateProgressBar(now);
+    var updateDuration = const Duration(seconds: 3);
 
     Timer.periodic(updateDuration, (timer) {
-      updateProgressBar();
+      updateProgressBar(now);
     });
   }
 
-  void updateProgressBar() {
-    final now = DateTime.now();
+  void updateProgressBar(DateTime now) {
     final startTime = _parseTime(widget.tableau.startTime, now);
     final endTime = _parseTime(widget.tableau.endTime, now);
 
@@ -45,8 +49,8 @@ class _TableauItemViewState extends State<TableauListCellView> {
     } else if (now.isAfter(endTime)) {
       progress = 1.0;
     } else {
-      final timePassed = now.difference(startTime).inMinutes;
-      final totalDuration = endTime.difference(startTime).inMinutes;
+      final timePassed = now.difference(startTime).inSeconds;
+      final totalDuration = endTime.difference(startTime).inSeconds;
       progress = timePassed / totalDuration;
     }
 
@@ -57,7 +61,17 @@ class _TableauItemViewState extends State<TableauListCellView> {
 
   @override
   Widget build(BuildContext context) {
+    final currentTheme = _getSelectedTheme(widget.themeType);
+    var themeColor = _getThemedColor(currentTheme);
     return Card(
+      borderOnForeground: true,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(17.0),
+        side: BorderSide(
+          color: progress > 0 && progress < 1 ? themeColor : Colors.transparent,
+          width: 2.0,
+        ),
+      ),
       child: Padding(
         padding: const EdgeInsets.symmetric(
           horizontal: 20,
@@ -88,7 +102,8 @@ class _TableauItemViewState extends State<TableauListCellView> {
                   width: 200,
                   child: LinearProgressIndicator(
                     value: progress,
-                    color: Theme.of(context).primaryColor,
+                    color: themeColor,
+                    backgroundColor: themeColor.withAlpha(50),
                   ),
                 ),
                 const Spacer(),
@@ -99,6 +114,32 @@ class _TableauItemViewState extends State<TableauListCellView> {
         ),
       ),
     );
+  }
+
+  Color _getThemedColor(ThemeData currentTheme) {
+    final themeMode = MediaQuery.of(context).platformBrightness;
+    if (themeMode == Brightness.light) {
+      return progress > 0 && progress < 1
+          ? currentTheme.primaryColor
+          : currentTheme.primaryColor.withAlpha(0);
+    } else {
+      return Colors.grey;
+    }
+  }
+
+  ThemeData _getSelectedTheme(ThemeType themeType) {
+    switch (themeType) {
+      case ThemeType.p1:
+        return AppTheme.p1();
+      case ThemeType.p2:
+        return AppTheme.p2();
+      case ThemeType.p3:
+        return AppTheme.p3();
+      case ThemeType.p4:
+        return AppTheme.p4();
+      default:
+        return AppTheme.p1();
+    }
   }
 
   DateTime _parseTime(String time, DateTime now) {
