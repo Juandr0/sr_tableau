@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:school_sr_tableau/models/radio_tableau.dart';
 import 'dart:async';
 import 'package:school_sr_tableau/app_theme.dart';
+import 'package:school_sr_tableau/pages/tableau_list_page.dart';
 
 class TableauListCellView extends StatefulWidget {
-  const TableauListCellView(this.tableau, {super.key});
+  const TableauListCellView(this.tableau, this.themeType, {super.key});
+
   final RadioTableau tableau;
+  final ThemeType themeType;
 
   @override
   State<TableauListCellView> createState() => _TableauItemViewState();
@@ -18,7 +21,6 @@ class _TableauItemViewState extends State<TableauListCellView> {
     fontSize: 15,
   );
   double progress = 0.0;
-  final ThemeData currentTheme = AppTheme.p4();
 
   @override
   void initState() {
@@ -58,6 +60,7 @@ class _TableauItemViewState extends State<TableauListCellView> {
 
   @override
   Widget build(BuildContext context) {
+    final currentTheme = _getSelectedTheme(widget.themeType);
     return Card(
       borderOnForeground: true,
       shape: RoundedRectangleBorder(
@@ -111,6 +114,21 @@ class _TableauItemViewState extends State<TableauListCellView> {
         ),
       ),
     );
+  }
+
+  ThemeData _getSelectedTheme(ThemeType themeType) {
+    switch (themeType) {
+      case ThemeType.p1:
+        return AppTheme.p1();
+      case ThemeType.p2:
+        return AppTheme.p2();
+      case ThemeType.p3:
+        return AppTheme.p3();
+      case ThemeType.p4:
+        return AppTheme.p4();
+      default:
+        return AppTheme.p1();
+    }
   }
 
   DateTime _parseTime(String time, DateTime now) {

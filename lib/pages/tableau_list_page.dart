@@ -7,10 +7,15 @@ import 'package:school_sr_tableau/widgets/data_fetcher.dart';
 enum ThemeType { p1, p2, p3, p4 }
 
 class TableauListPage extends StatefulWidget {
-  const TableauListPage({required this.channel, this.channelId, super.key});
+  const TableauListPage(
+      {required this.channel,
+      this.channelId,
+      required this.colorTheme,
+      super.key});
 
   final String? channel;
   final int? channelId;
+  final ThemeType colorTheme;
 
   @override
   State<StatefulWidget> createState() => _TableauListPageState();
@@ -52,7 +57,7 @@ class _TableauListPageState extends State<TableauListPage> {
           ? ListView.builder(
               itemCount: dataList.length,
               itemBuilder: (ctx, index) {
-                return TableauListCellView(dataList[index]);
+                return TableauListCellView(dataList[index], widget.colorTheme);
               },
             )
           : const Center(child: CircularProgressIndicator()),

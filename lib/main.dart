@@ -34,18 +34,21 @@ class MyApp extends StatelessWidget {
               path: '/p1',
               builder: (context, state) => const TableauListPage(
                 channel: 'p1',
+                colorTheme: ThemeType.p1,
               ),
             ),
             GoRoute(
               path: '/p2',
               builder: (context, state) => const TableauListPage(
                 channel: 'p2',
+                colorTheme: ThemeType.p2,
               ),
             ),
             GoRoute(
               path: '/p3',
               builder: (context, state) => const TableauListPage(
                 channel: 'p3',
+                colorTheme: ThemeType.p3,
               ),
             ),
             GoRoute(
@@ -59,6 +62,7 @@ class MyApp extends StatelessWidget {
                 return TableauListPage(
                   channel: 'p4',
                   channelId: channelId,
+                  colorTheme: ThemeType.p4,
                 );
               },
             ),
