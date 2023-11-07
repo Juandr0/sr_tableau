@@ -41,15 +41,20 @@ class _TableauItemViewState extends State<TableauListCellView> {
   void updateProgressBar() {
     final now = DateTime.now();
     final startTime = _parseTime(widget.tableau.startTime, now);
-    final endTime = _parseTime(widget.tableau.endTime, now);
+    DateTime endTime = _parseTime(widget.tableau.endTime, now);
 
     if (now.isBefore(startTime)) {
       progress = 0.0;
     } else if (now.isAfter(endTime)) {
       progress = 1.0;
     } else {
+      if (endTime == DateTime(now.year, now.month, now.day, 0, 0)) {
+        endTime = DateTime(
+            now.year, now.month, now.day, 23, 59, 59); // Set it to 23:59:59
+      }
       final timePassed = now.difference(startTime).inSeconds;
       final totalDuration = endTime.difference(startTime).inSeconds;
+
       progress = timePassed / totalDuration;
     }
 
