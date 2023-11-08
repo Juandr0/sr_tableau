@@ -3,8 +3,8 @@ import 'package:go_router/go_router.dart';
 
 import 'package:school_sr_tableau/router/go_router_scaffold.dart';
 import 'package:school_sr_tableau/app_theme.dart';
-import 'package:school_sr_tableau/pages/channel_list_page.dart';
-import 'package:school_sr_tableau/pages/tableau_list_page.dart';
+import 'package:school_sr_tableau/views/channel_list_page.dart';
+import 'package:school_sr_tableau/views/tableau_list_page.dart';
 
 void main() {
   runApp(MyApp());

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:school_sr_tableau/models/radio_tableau.dart';
 import 'dart:async';
 import 'package:school_sr_tableau/app_theme.dart';
-import 'package:school_sr_tableau/pages/tableau_list_page.dart';
+import 'package:school_sr_tableau/views/tableau_list_page.dart';
 
 class TableauListCellView extends StatefulWidget {
   const TableauListCellView(this.tableau, this.themeType, {super.key});
@@ -123,7 +123,7 @@ class _TableauItemViewState extends State<TableauListCellView> {
   Color _getThemedColor(ThemeData currentTheme) {
     final themeMode = MediaQuery.of(context).platformBrightness;
     if (themeMode == Brightness.light) {
-      return progress > 0 && progress < 1
+      return progress > 0
           ? currentTheme.primaryColor
           : currentTheme.primaryColor.withAlpha(0);
     } else {
