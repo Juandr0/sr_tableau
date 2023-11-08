@@ -1,7 +1,7 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:school_sr_tableau/models/radio_tableau.dart';
-import 'package:school_sr_tableau/pages/cells/tableau_list_cell_view.dart';
+import 'package:school_sr_tableau/views/cells/tableau_list_cell_view.dart';
 import 'package:school_sr_tableau/widgets/data_fetcher.dart';
 
 enum ThemeType { p1, p2, p3, p4 }
