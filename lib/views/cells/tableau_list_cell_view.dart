@@ -3,6 +3,7 @@ import 'package:school_sr_tableau/models/radio_tableau.dart';
 import 'dart:async';
 import 'package:school_sr_tableau/app_theme.dart';
 import 'package:school_sr_tableau/views/tableau_list_page.dart';
+import 'tableau_card.dart';
 
 class TableauListCellView extends StatefulWidget {
   const TableauListCellView(this.tableau, this.themeType, {super.key});
@@ -26,6 +27,18 @@ class _TableauItemViewState extends State<TableauListCellView> {
   void initState() {
     super.initState();
     updateProgressBarTimer();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final currentTheme = _getSelectedTheme(widget.themeType);
+    var themeColor = _getThemedColor(currentTheme);
+    return TableauCard(
+      progress: progress,
+      themeColor: themeColor,
+      widget: widget,
+      titleTextStyle: titleTextStyle,
+    );
   }
 
   void updateProgressBarTimer() {
@@ -61,63 +74,6 @@ class _TableauItemViewState extends State<TableauListCellView> {
     if (mounted) {
       setState(() {});
     }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final currentTheme = _getSelectedTheme(widget.themeType);
-    var themeColor = _getThemedColor(currentTheme);
-    return Card(
-      borderOnForeground: true,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(17.0),
-        side: BorderSide(
-          color: progress > 0 && progress < 1 ? themeColor : Colors.transparent,
-          width: 2.0,
-        ),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 20,
-          vertical: 20,
-        ),
-        child: Column(
-          children: [
-            SizedBox(
-              width: 200,
-              child: Center(
-                child: Text(
-                  widget.tableau.title,
-                  style: titleTextStyle,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(widget.tableau.startTime),
-                const Spacer(),
-                Container(
-                  alignment: Alignment.center,
-                  width: 200,
-                  child: LinearProgressIndicator(
-                    value: progress,
-                    color: themeColor,
-                    backgroundColor: themeColor.withAlpha(50),
-                  ),
-                ),
-                const Spacer(),
-                Text(widget.tableau.endTime),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
   }
 
   Color _getThemedColor(ThemeData currentTheme) {
